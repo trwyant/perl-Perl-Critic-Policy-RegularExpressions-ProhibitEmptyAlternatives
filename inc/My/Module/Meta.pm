@@ -81,9 +81,16 @@ sub requires {
 ##  if ( ! $self->distribution() ) {
 ##  }
     return +{
-	'Carp'		=> 0,
-	strict		=> 0,
-	warnings	=> 0,
+	'Carp'			=> 0,
+	'English'		=> 0,
+	'Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue'	=> 0,
+	'Perl::Critic::Policy'	=> 0,
+	'Perl::Critic::Utils'	=> 0,
+	'PPIx::Regexp'		=> 0,
+	'Readonly'		=> 0,
+	base			=> 0,
+	strict			=> 0,
+	warnings		=> 0,
 	@extra,
     };
 }
