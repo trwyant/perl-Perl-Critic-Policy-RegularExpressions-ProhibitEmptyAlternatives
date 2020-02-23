@@ -7,6 +7,8 @@ use warnings;
 use PPIx::Regexp 0.057; # To force version.
 use Readonly;
 
+use Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue
+    qw{ throw_policy_value };
 use Perl::Critic::Utils qw< :booleans :characters hashify :severities >;
 
 use base 'Perl::Critic::Policy';
@@ -33,15 +35,21 @@ Readonly::Scalar my $OPERATOR_CLASS => 'PPIx::Regexp::Token::Operator';
 sub supported_parameters { return (
         {
             name        => 'allow_empty_final_alternative',
-            description => 'allow final alternative to be empty',
+            description => 'Allow final alternative to be empty',
             behavior    => 'boolean',
             default_string  => '0',
         },
         {
             name        => 'allow_if_group_anchored',
-            description => 'allow empty alternatives if the group is anchored to the end of the string',
+            description => 'Allow empty alternatives if the group is anchored to the end of the string',
             behavior    => 'boolean',
             default_string  => '0',
+        },
+        {
+            name        => 'ignore_files',
+            description => 'Ignore the specified files',
+            behavior    => 'string',
+            parser      => \&_make_ignore_regexp,
         },
     ) }
 
@@ -57,6 +65,14 @@ sub applies_to           { return qw<
 
 sub violates {
     my ( $self, $elem, $document ) = @_;
+
+    # Ignore if told to do so.
+    if ( $self->{_ignore_files__re} &&
+        defined( my $logical_filename = $document->logical_filename() )
+    ) {
+        $logical_filename =~ $self->{_ignore_files__re}
+            and return;
+    }
 
     # Make a PPIx::Regexp from the PPI element for further analysis.
     my $ppix = $document->ppix_regexp_from_element( $elem )
@@ -230,6 +246,25 @@ sub _last_ssibling {
 
 #-----------------------------------------------------------------------------
 
+# Custom parser for the ignore_files configuration item. The regexp
+# ends up in {_ignore_files__re}.
+sub _make_ignore_regexp {
+    my ( $self, $parameter, $config_string ) = @_;
+    if ( defined $config_string && '' ne $config_string ) {
+        $self->{_ignore_files__re} = eval {
+            qr<$config_string>;
+        } or throw_policy_value
+            policy          => $self->get_short_name(),
+            option_name     => $parameter->get_name(),
+            option_value    => $config_string,
+            message_suffix  => "failed to parse: $@",
+            ;
+    }
+    return;
+}
+
+#-----------------------------------------------------------------------------
+
 # Return true if the given element is quantified AND 0 is an allowed
 # quantity. In practice this means quantifiers *, ?, {0}, {0,...}
 sub _maybe_quantified_to_zero {
@@ -317,10 +352,26 @@ F<.perlcriticrc> file:
     allow_if_group_anchored = 1
 
 B<Caveat:> Determining whether the group was in fact adequately anchored
-turned out to be surprisingly complex -- meaning that the code may well
+turned out to be surprisingly difficult -- meaning that the code may well
 not get things right, especially in complex cases. For that reason the
 author recommends that the user be cautious about relying on this
 configuration item to produce correct results.
+
+=head2 ignore_files
+
+It may make sense to ignore some files. For example,
+L<Module::Install|Module::Install> component
+F<inc/Module/Install/Metadata.pm> is known to violate this policy, at
+least in its default configuration -- though it passes if
+C<allow_empty_final_alternative> is enabled.
+
+If you wish to ignore certain files, you can add a block like this to
+your F<.perlcriticrc> file:
+
+    [RegularExpressions::ProhibitEmptyAlternatives]
+    allow_if_group_anchored = inc/Module/Install/Metadata\.pm\z
+
+The value is a regular expression.
 
 =head1 AUTHOR
 

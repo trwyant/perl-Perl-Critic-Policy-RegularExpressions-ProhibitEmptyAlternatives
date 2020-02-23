@@ -27,6 +27,7 @@ GetOptions( \%opt,
     qw{
         allow_empty_final_alternative|final!
         allow_if_group_anchored|anchored!
+        ignore_files|ignore-files=s
     },
     'format=s'  => \( my $format ),
     'verbose!'  => \( my $verbose ),
@@ -118,19 +119,11 @@ values, and has the same default.
 This option displays the documentation for this script. The script then
 exits.
 
-=head2 -noprofile
+=head2 -ignore-files
 
-This option specifies that no profile be used. It specifically prevents
-the use of the default profile.
+ -ignore-files '\bFubar\.pm\z'
 
-=head2 -profile profile_file
-
-This option specifies the profile file to use.
-
-=head2 -single-policy policy_name
-
-This option exists simply to intercept any attempt to specify a policy
-other than C<RegularExpressions::ProhibitEmptyAlternatives>.
+This option specifies the value for the C<ignore_files> configuration.
 
 =head2 -verbose
 

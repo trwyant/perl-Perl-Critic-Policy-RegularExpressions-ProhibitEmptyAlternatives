@@ -84,6 +84,16 @@ m/(?[\d|])$/;    # Actually, this is a syntax error.
 
 #-----------------------------------------------------------------------------
 
+## name Ignore file if told to do so
+## parms { ignore_files => '\bFubar\z' }
+## filename Fubar
+## failures 0
+## cut
+
+m/a||c/;
+
+#-----------------------------------------------------------------------------
+
 # Local Variables:
 #   mode: cperl
 #   cperl-indent-level: 4
