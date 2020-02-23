@@ -4,6 +4,7 @@ use 5.006001;
 use strict;
 use warnings;
 
+use English qw{ -no_match_vars };
 use PPIx::Regexp 0.057; # To force version.
 use Readonly;
 
@@ -250,14 +251,14 @@ sub _last_ssibling {
 # ends up in {_ignore_files__re}.
 sub _make_ignore_regexp {
     my ( $self, $parameter, $config_string ) = @_;
-    if ( defined $config_string && '' ne $config_string ) {
+    if ( defined $config_string && $EMPTY ne $config_string ) {
         $self->{_ignore_files__re} = eval {
-            qr<$config_string>;
+            qr<$config_string>; ## no critic (RequireDotMatchAnything,RequireExtendedFormatting,RequireLineBoundaryMatching)
         } or throw_policy_value
             policy          => $self->get_short_name(),
             option_name     => $parameter->get_name(),
             option_value    => $config_string,
-            message_suffix  => "failed to parse: $@",
+            message_suffix  => "failed to parse: $EVAL_ERROR",
             ;
     }
     return;
