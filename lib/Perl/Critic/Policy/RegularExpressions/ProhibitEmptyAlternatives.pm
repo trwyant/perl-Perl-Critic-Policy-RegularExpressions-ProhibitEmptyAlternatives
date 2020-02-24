@@ -25,7 +25,6 @@ $VERSION =~ s/ _ //smxg;    ## no critic (RequireConstantVersion)
 Readonly::Scalar my $DESC => q<Empty alternative>;
 Readonly::Scalar my $EXPL => q<Empty alternatives always match>;
 
-Readonly::Scalar my $ALTERNATION_OPERATOR   => q<|>;
 Readonly::Scalar my $LAST_ELEMENT   => -1;
 Readonly::Scalar my $MAIN_CLASS     => 'PPIx::Regexp::Structure::Main';
 Readonly::Scalar my $NODE_CLASS     => 'PPIx::Regexp::Node';
@@ -42,7 +41,7 @@ sub supported_parameters { return (
         },
         {
             name        => 'allow_if_group_anchored',
-            description => 'Allow empty alternatives if the group is anchored to the end of the string',
+            description => 'Allow empty alternatives if the group is anchored on the right',
             behavior    => 'boolean',
             default_string  => '0',
         },
@@ -105,7 +104,7 @@ sub _is_node_in_violation {
     foreach my $kid ( @schildren ) {
 
         if ( $kid->isa( $OPERATOR_CLASS ) &&
-            $ALTERNATION_OPERATOR eq $kid->content() ) {
+            $PIPE eq $kid->content() ) {
             # $kid is an alternation operator
             $found_empty_alternative ||= $prev_is_alternation;
             $prev_is_alternation = $TRUE;
@@ -171,7 +170,7 @@ sub _is_node_anchored {
         # If $elem is an alternation operator we need to skip to the end
         # of the group.
         if ( $elem->isa( $OPERATOR_CLASS ) &&
-            $ALTERNATION_OPERATOR eq $elem->content() ) {
+            $PIPE eq $elem->content() ) {
             $elem = _last_ssibling( $elem );
             next;
         }
@@ -327,7 +326,7 @@ This policy supports the following configuration items.
 By default, this policy prohibits all empty alternatives, since they
 match anything. It may make sense, though, to leave the final
 alternative in a regexp or group empty. For example,
-C</(?:Larry|Moe|Curly|)/> is equivalent to the more-usual idiom
+C</(?:Larry|Moe|Curly|)/> is equivalent to the perhaps-more-usual idiom
 C</(?:Larry|Moe|Curly)?/>.
 
 If you wish to allow this, you can add a block like this to your
@@ -339,7 +338,7 @@ F<.perlcriticrc> file:
 =head2 allow_if_group_anchored
 
 It may make sense to allow empty alternatives if they occur in a group
-that is anchored on the right. For example, in
+that is anchored on the right. For example,
 
  "What ho, Porthos!" =~ /(|Athos|Porthos|Aramis)!/
 
@@ -352,11 +351,11 @@ F<.perlcriticrc> file:
     [RegularExpressions::ProhibitEmptyAlternatives]
     allow_if_group_anchored = 1
 
-B<Caveat:> Determining whether the group was in fact adequately anchored
-turned out to be surprisingly difficult -- meaning that the code may well
-not get things right, especially in complex cases. For that reason the
-author recommends that the user be cautious about relying on this
-configuration item to produce correct results.
+B<Caveat:> I believe that a full static analysis of this case is not
+possible when back references or recursions must be considered as
+anchors. Correct analysis of groups (captures or otherwise) is not
+currently attempted. In these cases the code assumes that the
+entity represents an anchor.
 
 =head2 ignore_files
 
