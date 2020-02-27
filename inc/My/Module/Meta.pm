@@ -86,7 +86,7 @@ sub requires {
 	'Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue'	=> 0,
 	'Perl::Critic::Policy'	=> 0,
 	'Perl::Critic::Utils'	=> 0,
-	'PPIx::Regexp'		=> 0,
+	'PPIx::Regexp'		=> 0.070,	# For is_quantifier().
 	'Readonly'		=> 0,
 	base			=> 0,
 	strict			=> 0,

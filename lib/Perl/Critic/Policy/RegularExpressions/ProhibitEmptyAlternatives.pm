@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use English qw{ -no_match_vars };
-use PPIx::Regexp 0.057; # To force version.
+use PPIx::Regexp 0.070; # For is_quantifier()
 use Readonly;
 
 use Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue
