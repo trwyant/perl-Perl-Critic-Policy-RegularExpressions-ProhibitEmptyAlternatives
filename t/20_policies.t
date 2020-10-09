@@ -11,7 +11,7 @@ use Test::Perl::Critic::Policy qw< all_policies_ok >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '0.001';
+our $VERSION = '0.001_01';
 
 #-----------------------------------------------------------------------------
 # Notice that you can pass arguments to this test, which limit the testing to
