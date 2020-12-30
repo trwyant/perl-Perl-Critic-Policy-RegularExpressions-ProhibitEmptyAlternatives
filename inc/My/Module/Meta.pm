@@ -46,7 +46,7 @@ sub meta_merge {
 	dynamic_config	=> 1,
 	resources	=> {
 	    bugtracker	=> {
-		web	=> 'https://rt.cpan.org/Public/Dist/Display.html?Name=Perl-Critic-Policy-RegularExpressions-ProhibitEmptyAlternatives',
+		web	=> 'https://github.com/trwyant/perl-Perl-Critic-Policy-RegularExpressions-ProhibitEmptyAlternatives/issues',
 		mailto  => 'wyant@cpan.org',
 	    },
 	    license	=> 'http://dev.perl.org/licenses/',
@@ -154,6 +154,10 @@ C<< {META_MERGE}->{build_requires} >> or C<BUILD_REQUIRES> key.
 This method returns the value of the environment variable
 C<MAKING_MODULE_DISTRIBUTION> at the time the object was instantiated.
 
+=head2 meta_merge
+
+This method returns data for the C<META_MERGE> meta data key.
+
 =head2 provides
 
  use YAML;
@@ -210,7 +214,8 @@ information makes it into F<META.yml>.
 =head1 SUPPORT
 
 Support is by the author. Please file bug reports at
-L<https://rt.cpan.org>, or in electronic mail to the author.
+L<https://github.com/trwyant/perl-Perl-Critic-Policy-RegularExpressions-ProhibitEmptyAlternatives/issues>,
+or in electronic mail to the author.
 
 =head1 AUTHOR
 
