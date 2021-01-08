@@ -8,7 +8,7 @@ use warnings;
 use Carp;
 use Exporter;
 
-our $VERSION = '0.002';
+our $VERSION = '0.002_01';
 
 our @ISA = qw{ Exporter };
 
