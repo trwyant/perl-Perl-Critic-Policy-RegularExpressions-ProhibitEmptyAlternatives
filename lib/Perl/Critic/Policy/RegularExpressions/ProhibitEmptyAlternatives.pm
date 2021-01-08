@@ -385,7 +385,7 @@ Thomas R. Wyant, III F<wyant at cpan dot org>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Thomas R. Wyant, III
+Copyright (C) 2020-2021 Thomas R. Wyant, III
 
 =head1 LICENSE
 
