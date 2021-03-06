@@ -291,12 +291,10 @@ __END__
 
 Perl::Critic::Policy::RegularExpressions::ProhibitEmptyAlternatives - Beware empty alternatives, because they always match.
 
-
 =head1 AFFILIATION
 
 This Policy is stand-alone, and is not part of the core
 L<Perl::Critic|Perl::Critic>.
-
 
 =head1 DESCRIPTION
 
@@ -376,8 +374,9 @@ The value is a regular expression.
 =head1 SUPPORT
 
 Support is by the author. Please file bug reports at
-L<https://github.com/trwyant/perl-Perl-Critic-Policy-RegularExpressions-ProhibitEmptyAlternatives/issues>,
-or in electronic mail to the author.
+L<https://rt.cpan.org/Public/Dist/Display.html?Name=Perl-Critic-Policy-RegularExpressions-ProhibitEmptyAlternatives>,
+L<https://github.com/trwyant/perl-Perl-Critic-Policy-RegularExpressions-ProhibitEmptyAlternatives/issues>, or in
+electronic mail to the author.
 
 =head1 AUTHOR
 
