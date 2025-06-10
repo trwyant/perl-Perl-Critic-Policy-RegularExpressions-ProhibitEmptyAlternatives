@@ -10,6 +10,7 @@ use version;
 
 use constant THIS_PERL  => version->parse( $] );
 use constant PERL_5_10  => version->parse( 'v5.10.0' );
+use constant PERL_5_10_1 => version->parse( 'v5.10.1' );
 use constant PERL_5_12  => version->parse( 'v5.12.0' );
 
 unless ( caller ) {
@@ -83,13 +84,19 @@ sub want_modules {
         or $perl_ver = THIS_PERL;
     if ( $perl_ver >= PERL_5_12 ) {
         return;
+    } elsif ( $perl_ver >= PERL_5_10_1 ) {
+        return qw{
+            RRA/podlators-4.14.tar.gz
+        };
     } elsif ( $perl_ver >= PERL_5_10 ) {
         return qw{
+            PETDANCE/Perl-Critic-1.142.tar.gz
             RRA/podlators-4.14.tar.gz
         };
     } else {
         return qw{
             SMUELLER/ExtUtils-ParseXS-3.30.tar.gz
+            PETDANCE/Perl-Critic-1.142.tar.gz
             RRA/podlators-4.14.tar.gz
         };
     }
