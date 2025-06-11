@@ -85,17 +85,25 @@ sub want_modules {
     if ( $perl_ver >= PERL_5_12 ) {
         return;
     } elsif ( $perl_ver >= PERL_5_10_1 ) {
+        # NOTE that, thus far, XSLoader, Test-Deep, and Perl-Critic are
+        # only needed for Perl-Critic policies, and maybe not all of
+        # those.
         return qw{
+            https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Test-Deep-0.119.tar.gz
             RRA/podlators-4.14.tar.gz
         };
     } elsif ( $perl_ver >= PERL_5_10 ) {
         return qw{
+            https://cpan.metacpan.org/authors/id/S/SA/SAPER/XSLoader-0.10.tar.gz
+            https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Test-Deep-0.119.tar.gz
             PETDANCE/Perl-Critic-1.142.tar.gz
             RRA/podlators-4.14.tar.gz
         };
     } else {
         return qw{
+            https://cpan.metacpan.org/authors/id/S/SA/SAPER/XSLoader-0.10.tar.gz
             SMUELLER/ExtUtils-ParseXS-3.30.tar.gz
+            https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Test-Deep-0.119.tar.gz
             PETDANCE/Perl-Critic-1.142.tar.gz
             RRA/podlators-4.14.tar.gz
         };
