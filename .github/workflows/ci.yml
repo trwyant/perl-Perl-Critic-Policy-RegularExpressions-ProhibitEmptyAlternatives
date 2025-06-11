@@ -105,7 +105,7 @@ jobs:
       if: env.MY_WANT_MODULES
       run: |
         cpanm --verbose --force https://cpan.metacpan.org/authors/id/S/SA/SAPER/XSLoader-0.10.tar.gz
-        perl .github/workflows/XSLoader.t
+        perl -T .github/workflows/XSLoader.t
         cpanm ${{ env.MY_WANT_MODULES }}
 
     - name: Install module dependencies
