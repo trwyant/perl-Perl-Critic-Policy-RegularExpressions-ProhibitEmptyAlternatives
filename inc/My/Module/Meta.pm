@@ -157,6 +157,8 @@ sub recommended_module_versions {
     );
 }
 
+sub release_status { 'stable' }
+
 sub requires {
     my ( $self, @extra ) = @_;
 ##  if ( ! $self->distribution() ) {
@@ -315,6 +317,11 @@ recommended modules.
 
 This subroutine returns an array of the names and versions of required
 modules. Any arguments will be appended to the returned list.
+
+=head2 release_status
+
+This returns the L<CPAN::Meta::Spec|CPAN::Meta::Spec> release status for
+the distribution.
 
 =head2 requires
 
